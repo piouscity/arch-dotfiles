@@ -35,8 +35,8 @@ input {
         off
     }
 
-    warp-mouse-to-focus
-    focus-follows-mouse
+    // warp-mouse-to-focus
+    // focus-follows-mouse
 }
 
 output "eDP-1" {
