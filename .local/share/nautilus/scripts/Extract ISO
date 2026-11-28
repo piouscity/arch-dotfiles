@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+for file in "$@"; do
+[ -f "$file" ] || continue
+dir="$(dirname "$file")"
+base="$(basename "$file")"
+target="$dir/${base%.*}"
+mkdir -p "$target"
+
+if command -v zenity >/dev/null 2>&1; then
+{
+  bsdtar -xvf "$file" -C "$target" | while IFS= read -r entry; do
+    printf '# Extracting: %s\n' "$entry"
+  done
+} | zenity --progress --title="Extracting ISO" --text="Starting extraction..." --pulsate --auto-close
+else
+bsdtar -xf "$file" -C "$target"
+fi
+done
